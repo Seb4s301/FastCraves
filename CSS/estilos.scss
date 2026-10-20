@@ -1,0 +1,847 @@
+/* ==========================================================================
+   FAST CRAVES - Estilos (SCSS)
+   Paleta cálida estilo BK/Tantillo: rojo flame + mostaza sobre crema cálida.
+   ========================================================================== */
+
+@use "sass:color";
+
+
+// --- Identidad visual ---
+$color-primario:    #D42D18;       // Rojo flame (marca)
+$color-secundario:  #F2A81C;       // Mostaza (destacados)
+$color-fondo:       #FBF3E2;       // Crema vainilla (base)
+$color-superficie:  #FFFCF3;       // Superficie de tarjetas
+$color-blanco:      #ffffff;
+$color-oscuro:      #2A1409;       // Espresso (footer / badges)
+$color-texto:       #3A1E12;       // Chocolate (texto principal — nunca gris frío)
+$color-texto-suave: #7C5A46;       // Taupe (subtítulos y descripciones)
+$color-borde:       #ECD9B4;       // Topo (bordes sutiles)
+
+// Tipografía: display condensado agresivo (Anton) + cuerpo (Nunito)
+$fuente-principal: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$fuente-titulos:   'Anton', 'Nunito', 'Segoe UI', Tahoma, sans-serif;
+$radio-borde:      18px;
+$sombra-estandar:  0 8px 24px rgba(94, 48, 20, 0.08);
+$breakpoint-tablet: 768px;
+
+// Easing fuerte: las curvas nativas de CSS se sienten lentas y genéricas
+$ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+$ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+
+// --- Placeholders reutilizables con @extend ---
+%boton-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $fuente-principal;
+  font-weight: 800;
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-radius: 999px;
+  padding: 14px 30px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  // Propiedades exactas, nunca "all" — respuesta instantánea
+  transition: transform 160ms $ease-out, background-color 200ms ease, box-shadow 200ms ease;
+
+  // Toda superficie presionable confirma que el clic fue escuchado
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+%tarjeta-base {
+  background-color: $color-superficie;
+  border-radius: $radio-borde;
+  box-shadow: $sombra-estandar;
+  border: 1px solid $color-borde;
+  transition: transform 200ms $ease-out, box-shadow 200ms $ease-out;
+}
+
+
+// --- Mixins ---
+@mixin responder-a-movil {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin flex-centrado($justificar: center, $alinear: center) {
+  display: flex;
+  justify-content: $justificar;
+  align-items: $alinear;
+}
+
+
+// --- Reset y base ---
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// body es flex-column para el footer pegajoso (margin-top: auto).
+// Ojo: cualquier sección con margin:auto lateral se encoge — necesita width:100%.
+body {
+  background-color: $color-fondo;
+  font-family: $fuente-principal;
+  color: $color-texto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+// --- Barra de navegación ---
+.navbar {
+  @include flex-centrado(space-between, center);
+  background-color: $color-primario;
+  padding: 0.8rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+  .marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 3px solid $color-secundario;
+      object-fit: cover;
+    }
+
+    .logo-texto {
+      color: $color-blanco;
+      font-family: $fuente-titulos;
+      font-weight: 400;
+      font-size: 1.4rem;
+      letter-spacing: 0.2px;
+
+      small {
+        display: block;
+        font-family: $fuente-principal;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: $color-secundario;
+      }
+    }
+  }
+
+  .navbar-links {
+    display: flex;
+    list-style: none;
+    gap: 1.8rem;
+
+    li a {
+      color: $color-blanco;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.2s, color 0.2s;
+
+      &:hover,
+      &.active {
+        background-color: color.adjust($color-primario, $lightness: -8%);
+        color: $color-secundario;
+      }
+    }
+  }
+
+  .menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: $color-blanco;
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+}
+
+
+// --- Hero (portada) ---
+.cuerpo_index {
+  // Resplandor radial amarillo tras la hamburguesa
+  background:
+    radial-gradient(52% 68% at 62% 44%, rgba(242, 168, 28, 0.30), rgba(242, 168, 28, 0) 70%),
+    $color-fondo;
+  position: relative;
+
+  .opaco {
+    position: relative;
+    background: transparent;
+    min-height: 88vh;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4rem;
+    padding: 3.5rem 1.5rem 4.5rem;
+    text-align: center;
+
+    @include responder-a-movil {
+      min-height: auto;
+      gap: 1.2rem;
+      padding-bottom: 3rem;
+    }
+  }
+
+  // Split editorial: imagen a la derecha, DETRÁS del titular (z-index bajo)
+  .hero-imagen {
+    position: absolute;
+    left: 74%;
+    top: 42%;
+    transform: translate(-50%, -50%);
+    width: clamp(340px, 50vw, 680px);
+    z-index: 1;
+    pointer-events: none;
+
+    // Halo orgánico mostaza detrás de la hamburguesa
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 6% 4% 6%;
+      background: radial-gradient(circle at 50% 48%, rgba(242, 168, 28, 0.55) 0%, rgba(242, 168, 28, 0.16) 46%, rgba(242, 168, 28, 0) 72%);
+      z-index: 0;
+    }
+
+    // En móvil se apila arriba, ya no se solapa
+    @include responder-a-movil {
+      position: relative;
+      left: auto;
+      top: auto;
+      transform: none;
+      width: min(82vw, 360px);
+      order: -1;
+      margin-bottom: 0.4rem;
+    }
+  }
+
+  .hero-contenido {
+    position: relative;
+    z-index: 2; // Por encima de la hamburguesa
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    color: $color-texto;
+
+    .hero-tag {
+      position: relative;
+      z-index: 3;
+      background-color: $color-secundario;
+      color: $color-texto;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 7px 18px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    // Titular agresivo (Anton, mayúsculas, itálico) que INVADE la hamburguesa
+    .hero-titulo {
+      position: relative;
+      z-index: 3;
+      font-family: $fuente-titulos;
+      font-size: clamp(3.4rem, 11vw, 8.6rem);
+      font-weight: 400; // Anton es peso único, ya ultra-negro (sin faux-bold)
+      text-transform: uppercase;
+      font-style: italic; // Oblicuo sintético → look agresivo
+      line-height: 0.82;
+      letter-spacing: -1.5px;
+      margin: 0 0 1.5rem;
+      max-width: 820px;
+      color: $color-texto;
+      // Halo cálido: mantiene legible el texto oscuro sobre la hamburguesa
+      text-shadow: 0 2px 30px rgba(251, 243, 226, 0.9), 0 1px 3px rgba(251, 243, 226, 0.7);
+    }
+
+    .hero-descripcion {
+      position: relative;
+      z-index: 3;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: $color-texto-suave;
+      margin: 0.4rem 0 1.8rem;
+      max-width: 34rem;
+      text-shadow: 0 1px 14px rgba(251, 243, 226, 0.95), 0 0 6px rgba(251, 243, 226, 0.9);
+    }
+
+    .hero-botones {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: flex-start;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+  }
+
+  .hamburguesa-flotante {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// El hover (oscurecer + elevar) vive en el bloque D, reservado a puntero real
+.btn {
+  @extend %boton-base;
+
+  &.btn-principal {
+    background-color: $color-primario;
+    color: $color-blanco;
+  }
+
+  &.btn-secundario {
+    background-color: $color-secundario;
+    color: $color-oscuro;
+  }
+
+  &.btn-block {
+    width: 100%;
+  }
+}
+
+
+// --- Especialidades destacadas (inicio) ---
+.seccion-destacados {
+  width: 100%; // CLAVE: sin esto, margin:auto lateral lo encoge (body es flex-column)
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+  text-align: center;
+
+  .titulo-seccion {
+    font-family: $fuente-titulos;
+    font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+    color: $color-primario;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    margin-bottom: 2.5rem;
+  }
+
+  // 3 columnas en escritorio → 2 → 1; min(100%, 260px) evita desborde en móviles angostos
+  .grilla-destacados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 25px;
+  }
+
+  .tarjeta-destacada {
+    @extend %tarjeta-base;
+    padding: 2.5rem 1.5rem;
+
+    .icono-destacado {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      color: $color-primario;
+      margin-bottom: 0.8rem;
+    }
+
+    p {
+      color: $color-texto-suave;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+    }
+
+    a {
+      color: $color-primario;
+      font-weight: 800;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+
+// --- Encabezados y catálogo del menú ---
+.encabezado-pagina {
+  text-align: center;
+  padding: 2.5rem 1rem 1rem;
+
+  .titulo {
+    font-family: $fuente-titulos;
+    font-size: clamp(2.4rem, 6vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    color: $color-primario;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitulo-encabezado {
+    color: $color-texto-suave;
+    font-size: 1.1rem;
+  }
+}
+
+.subtitulo-menu {
+  font-family: $fuente-titulos;
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: -0.3px;
+  color: $color-primario;
+  padding-left: 8%;
+  margin: 2.5rem 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &::before {
+    content: "🔥";
+  }
+
+  &.subtitulo-bebidas::before {
+    content: "🥤";
+  }
+}
+
+.contenedor-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  padding: 10px 8% 50px;
+}
+
+.tarjeta-producto {
+  @extend %tarjeta-base;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .badge-producto {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: $color-secundario;
+    color: $color-texto;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.2px;
+
+    &.badge-estrella {
+      background-color: $color-primario;
+      color: $color-blanco;
+    }
+
+    // Variantes armonizadas con la paleta (espresso, sin verdes ni azules)
+    &.badge-oferta {
+      background-color: $color-oscuro;
+      color: $color-fondo;
+    }
+
+    &.badge-bebida {
+      background-color: $color-oscuro;
+      color: $color-fondo;
+    }
+  }
+
+  .img-producto {
+    width: 100%;
+    height: 190px;
+    object-fit: contain;
+    margin: 10px 0 15px;
+  }
+
+  .titulo-producto {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: $color-texto;
+    margin-bottom: 6px;
+  }
+
+  .desc-producto {
+    font-size: 0.88rem;
+    color: $color-texto-suave;
+    line-height: 1.45;
+    margin-bottom: 20px;
+  }
+
+  .fila-precio {
+    margin-top: auto;
+    @include flex-centrado(space-between, center);
+    padding-top: 12px;
+    border-top: 1px solid $color-borde;
+
+    .precio {
+      font-family: $fuente-titulos;
+      font-weight: 400;
+      font-size: 1.35rem;
+      color: $color-primario;
+    }
+
+    .btn-agregar {
+      background-color: $color-primario;
+      color: $color-blanco;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      @include flex-centrado;
+      transition: background-color 200ms ease, transform 200ms $ease-out;
+    }
+  }
+}
+
+
+// --- Formularios de contacto y reservas ---
+.seccion-formulario-contenedor {
+  padding: 2rem 1.5rem 5rem;
+  @include flex-centrado;
+}
+
+.tarjeta-formulario {
+  @extend %tarjeta-base;
+  width: 100%;
+  max-width: 600px;
+  padding: 2.5rem;
+
+  .titulo-form {
+    font-family: $fuente-titulos;
+    font-size: 1.7rem;
+    color: $color-primario;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    margin-bottom: 1.8rem;
+    text-align: center;
+  }
+
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    .campo-fila {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+
+      @include responder-a-movil {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .campo-grupo {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      label {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: $color-texto;
+      }
+
+      input,
+      select,
+      textarea {
+        font-family: $fuente-principal;
+        font-size: 0.95rem;
+        padding: 10px 14px;
+        border: 1px solid $color-borde;
+        border-radius: 10px;
+        outline: none;
+        background-color: #FFFBF0;
+
+        &:focus {
+          border-color: $color-primario;
+          background-color: $color-blanco;
+        }
+      }
+    }
+  }
+}
+
+
+// --- Pie de página ---
+.piepagina {
+  position: relative;
+  background-color: $color-oscuro;
+  color: $color-blanco;
+  margin-top: auto; // Ancla el footer abajo (sticky footer)
+  padding: 5rem 8% 1.5rem; // El padding superior despeja la onda
+
+  // Divisor ondulado: une el contenido claro con el pie oscuro de forma orgánica
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 54px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V28 C1050,55 900,8 600,30 C300,52 150,6 0,30 Z' fill='%23FBF3E2'/%3E%3C/svg%3E") no-repeat;
+    background-size: 100% 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .footer-contacto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+
+    .footer-col {
+      h4 {
+        color: $color-secundario;
+        font-size: 1.15rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        color: #E8D9C4;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 6px;
+      }
+    }
+  }
+
+  .footer-copy {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #B79E86;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+
+// --- Responsivo (≤768px) ---
+@include responder-a-movil {
+  .navbar {
+    .menu-btn {
+      display: block;
+    }
+
+    .navbar-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 240px;
+      background-color: $color-primario;
+      padding: 20px;
+      gap: 12px;
+      border-radius: 0 0 0 $radio-borde;
+      box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.3);
+
+      &.active {
+        display: flex;
+      }
+    }
+  }
+
+  .cuerpo_index .hero-contenido .hero-titulo {
+    font-size: clamp(2.7rem, 12vw, 4.2rem);
+  }
+
+  // En móvil la hamburguesa se apila: no necesita margen extra la descripción
+  .cuerpo_index .hero-contenido .hero-descripcion {
+    margin-top: 0.5rem;
+  }
+
+  .tarjeta-formulario {
+    padding: 1.5rem;
+  }
+}
+
+
+/* ==========================================================================
+   ANIMACIONES Y TRANSICIONES
+   Solo transform y opacity: van a la GPU y no repintan la página.
+   ========================================================================== */
+
+// A. Entrada de contenido al cargar
+@keyframes aparecerDesdeArriba {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-contenido,
+.encabezado-pagina,
+.titulo,
+.subtitulo-menu,
+.seccion-destacados .titulo-seccion {
+  animation: aparecerDesdeArriba 0.6s $ease-out both;
+}
+
+// B. Stagger de tarjetas — retrasos cortos (60-80ms); si son largos se siente lento
+@keyframes aparecerSuave {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tarjeta-producto,
+.tarjeta-destacada,
+.tarjeta-formulario {
+  animation: aparecerSuave 0.5s $ease-out both;
+}
+
+.contenedor-menu .tarjeta-producto:nth-child(1)   { animation-delay: 0.06s; }
+.contenedor-menu .tarjeta-producto:nth-child(2)   { animation-delay: 0.12s; }
+.contenedor-menu .tarjeta-producto:nth-child(3)   { animation-delay: 0.18s; }
+.contenedor-menu .tarjeta-producto:nth-child(4)   { animation-delay: 0.24s; }
+
+.grilla-destacados .tarjeta-destacada:nth-child(1) { animation-delay: 0.08s; }
+.grilla-destacados .tarjeta-destacada:nth-child(2) { animation-delay: 0.14s; }
+.grilla-destacados .tarjeta-destacada:nth-child(3) { animation-delay: 0.20s; }
+
+// C. Rotación del logo (solo puntero real: en táctil el hover se queda pegado)
+.navbar .marca .logo {
+  transition: transform 0.7s $ease-in-out, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navbar .marca .logo:hover {
+    transform: rotate(360deg) scale(1.08);
+    box-shadow: 0 0 15px rgba(242, 168, 28, 0.7);
+  }
+}
+
+// D. Hover de tarjetas, botones y productos — fuente única, reservado a puntero real
+@media (hover: hover) and (pointer: fine) {
+  .btn.btn-principal:hover {
+    background-color: color.adjust($color-primario, $lightness: -10%);
+    transform: translateY(-2px);
+  }
+
+  .btn.btn-secundario:hover {
+    background-color: color.adjust($color-secundario, $lightness: -8%);
+    transform: translateY(-2px);
+  }
+
+  .seccion-destacados .tarjeta-destacada:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .tarjeta-producto:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+  }
+
+  .tarjeta-producto:hover .img-producto {
+    transform: scale(1.08) rotate(-1deg);
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.15));
+  }
+
+  .tarjeta-producto .fila-precio .btn-agregar:hover {
+    background-color: color.adjust($color-primario, $lightness: -12%);
+    transform: scale(1.1);
+  }
+}
+
+.tarjeta-producto .img-producto {
+  transition: transform 0.35s $ease-out, filter 0.35s $ease-out;
+}
+
+// E. Pulso sutil en insignias ("Más Vendida") — amplitud reducida, sin molestar
+@keyframes pulsoBadge {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+
+.tarjeta-producto .badge-producto {
+  display: inline-block;
+  animation: pulsoBadge 2.4s infinite ease-in-out;
+}
+
+// F. Flotación de la hamburguesa (hero) — balanceo continuo con ease-in-out
+@keyframes flotar {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-16px) rotate(-2deg); }
+}
+
+.hamburguesa-flotante {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 30px rgba(90, 45, 15, 0.35)); // Sombra cálida, no negra fría
+  animation: flotar 4s $ease-in-out infinite;
+  will-change: transform;
+}
+
+// G. Campos de formulario (focus con feedback inmediato)
+.formulario input,
+.formulario select,
+.formulario textarea {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.formulario input:focus,
+.formulario select:focus,
+.formulario textarea:focus {
+  box-shadow: 0 4px 12px rgba(210, 45, 24, 0.15);
+}
+
+// H. Accesibilidad: quitar el movimiento que marea, conservando la información
+@media (prefers-reduced-motion: reduce) {
+  .hero-contenido,
+  .encabezado-pagina,
+  .titulo,
+  .subtitulo-menu,
+  .seccion-destacados .titulo-seccion,
+  .tarjeta-producto,
+  .tarjeta-destacada,
+  .tarjeta-formulario,
+  .hamburguesa-flotante,
+  .tarjeta-producto .badge-producto {
+    animation: none;
+  }
+
+  .navbar .marca .logo,
+  .btn,
+  .tarjeta-destacada,
+  .tarjeta-producto,
+  .tarjeta-producto .img-producto,
+  .btn-agregar {
+    transition: none;
+  }
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/index.css">
+    <title>FAST CRAVES - Menú (Sass)</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="marca">
+            <img src="../IMG/logo.jpg" alt="Logo Fast Craves" class="logo">
+            <span class="logo-texto">FAST CRAVES <small>Sass Edition</small></span>
+        </div>
+        <!-- Botón para pantallas pequeñas -->
+        <button class="menu-btn" id="menu-btn" aria-label="Abrir menú">
+            ☰
+        </button>
+        <ul class="navbar-links" id="nav-links"> 
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="menu.html" class="active">Menú</a></li>
+            <li><a href="reservas.html">Reservas</a></li>
+            <li><a href="contactanos.html">Contáctanos</a></li>
+        </ul>        
+    </nav>
+
+    <header class="encabezado-pagina">
+        <div class="titulo">Nuestra Carta Completa</div>
+        <p class="subtitulo-encabezado">Preparados al instante con ingredientes 100% frescos y seleccionados</p>
+    </header>
+     
+    <main class="cuerpo">
+        <!-- Sección Hamburguesas -->
+        <h2 class="subtitulo-menu">Hamburguesas a la Parrilla</h2>
+        <section class="contenedor-menu">    
+            <div class="tarjeta-producto">
+                <span class="badge-producto badge-estrella">⭐ Más Vendida</span>
+                <img src="../IMG/ParrilleraXL.webp" alt="Parrillera XL" class="img-producto" width="600" height="415" loading="lazy">
+                <h3 class="titulo-producto">Parrillera XL</h3>
+                <p class="desc-producto">Hamburguesa grande 100% carne de res a la parrilla con chorizo artesanal, papitas al hilo crocantes, mayonesa y crema de ají.</p>
+                <div class="fila-precio">
+                    <span class="precio">S/ 24.90</span>
+                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                </div>
+            </div>
+
+            <div class="tarjeta-producto">
+                <span class="badge-producto">🔥 Clásica</span>
+                <img src="../IMG/WHOPPERGrande.webp" alt="WHOPPER Grande" class="img-producto" width="600" height="467" loading="lazy">
+                <h3 class="titulo-producto">WHOPPER Grande</h3>
+                <p class="desc-producto">Carne de res a la parrilla con rodajas de tomate, lechuga fresca, mayonesa suave, kétchup especial, pepinillos y cebolla crujiente.</p>
+                <div class="fila-precio">
+                    <span class="precio">S/ 18.90</span>
+                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                </div>
+            </div>
+
+            <div class="tarjeta-producto">
+                <span class="badge-producto badge-oferta">🏷️ Ahorro</span>
+                <img src="../IMG/GrandedeCarne.webp" alt="Grande de Carne" class="img-producto" width="600" height="436" loading="lazy">
+                <h3 class="titulo-producto">Grande de Carne</h3>
+                <p class="desc-producto">Doble porción de hamburguesa de carne vacuna asada a fuego directo, láminas de queso cheddar fundido y tocino crujiente.</p>
+                <div class="fila-precio">
+                    <span class="precio">S/ 14.90</span>
+                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                </div>
+            </div>
+
+            <div class="tarjeta-producto">
+                <span class="badge-producto badge-top">👑 Doble Queso</span>
+                <img src="../IMG/MegaDobleconQueso.webp" alt="Mega Doble con Queso Grande" class="img-producto" width="600" height="409" loading="lazy">
+                <h3 class="titulo-producto">Mega Doble con Queso</h3>
+                <p class="desc-producto">Doble carne de res a la parrilla con abundante queso americano, pepinillos seleccionados, salsa de mostaza y kétchup.</p>
+                <div class="fila-precio">
+                    <span class="precio">S/ 26.90</span>
+                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Bebidas -->
+        <h2 class="subtitulo-menu subtitulo-bebidas">Bebidas Refrescantes 1L</h2>
+        <section class="contenedor-menu">
+            <div class="tarjeta-producto">
+                <span class="badge-producto badge-bebida">0% Azúcar</span>
+                <img src="../IMG/IncaKola.webp" alt="Inca Kola sin azúcar 1L" class="img-producto" width="443" height="573" loading="lazy">
+                <h3 class="titulo-producto">Inca Kola Sin Azúcar 1L</h3>
+                <p class="desc-producto">La bebida de sabor nacional bien fría en botella personal grande de 1 litro sin azúcar añadida.</p>
+                <div class="fila-precio">
+                    <span class="precio">S/ 6.90</span>
+                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                </div>
+            </div>
+
+            <div class="tarjeta-producto">
+                <span class="badge-producto badge-bebida">0% Azúcar</span>
+                <img src="../IMG/CocaCola.webp" alt="Coca Cola sin azúcar 1L" class="img-producto" width="465" height="602" loading="lazy">
+                <h3 class="titulo-producto">Coca Cola Sin Azúcar 1L</h3>
+                <p class="desc-producto">El clásico sabor refrescante de Coca Cola en versión sin azúcar de 1 litro para acompañar tus hamburguesas.</p>
+                <div class="fila-precio">
+                    <span class="precio">S/ 6.90</span>
+                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                </div>
+            </div>
+
+            <div class="tarjeta-producto">
+                <span class="badge-producto badge-bebida">Helada</span>
+                <img src="../IMG/sprite.webp" alt="Sprite 1L" class="img-producto" width="356" height="550" loading="lazy">
+                <h3 class="titulo-producto">Sprite 1L</h3>
+                <p class="desc-producto">Refresco con delicioso toque de lima-limón, ideal para calmar la sed y disfrutar de tus combos.</p>
+                <div class="fila-precio">
+                    <span class="precio">S/ 6.50</span>
+                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                </div>
+            </div>
+
+            <div class="tarjeta-producto">
+                <span class="badge-producto badge-bebida">Helada</span>
+                <img src="../IMG/fanta.webp" alt="Fanta 1L" class="img-producto" width="453" height="550" loading="lazy">
+                <h3 class="titulo-producto">Fanta Naranja 1L</h3>
+                <p class="desc-producto">Explosión de sabor a naranja bien helada en presentación de 1 litro para compartir.</p>
+                <div class="fila-precio">
+                    <span class="precio">S/ 5.50</span>
+                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de página -->
+    <footer id="contacto" class="piepagina">
+        <div class="footer-contacto">
+            <div class="footer-col">
+                <h4>FAST CRAVES</h4>
+                <p>El sabor auténtico de la comida rápida a la parrilla.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>📞 Teléfono: +51 987 654 321</p>
+                <p>✉️ Correo: pedidos@fastcraves.com</p>
+                <p>📍 Dirección: Av. Principal 123, Lima</p>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <p>Lunes a Domingo</p>
+                <p>11:00 AM - 11:00 PM</p>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <p>&copy; 2026 FAST CRAVES (Sass Edition). Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../JS/navbar.js"></script>
+</body>
+</html>

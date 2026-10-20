@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/index.css">
+    <title>FAST CRAVES - Contáctanos (Sass)</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="marca">
+            <img src="../IMG/logo.jpg" alt="Logo Fast Craves" class="logo">
+            <span class="logo-texto">FAST CRAVES <small>Sass Edition</small></span>
+        </div>
+        <!-- Botón para pantallas pequeñas -->
+        <button class="menu-btn" id="menu-btn" aria-label="Abrir menú">
+            ☰
+        </button>
+        <ul class="navbar-links" id="nav-links"> 
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="menu.html">Menú</a></li>
+            <li><a href="reservas.html">Reservas</a></li>
+            <li><a href="contactanos.html" class="active">Contáctanos</a></li>
+        </ul>        
+    </nav>
+
+    <header class="encabezado-pagina">
+        <div class="titulo">Contáctanos</div>
+        <p class="subtitulo-encabezado">¿Dudas, quejas o pedidos especiales? Estamos para atenderte con gusto.</p>
+    </header>
+
+    <main class="cuerpo seccion-formulario-contenedor">
+        <div class="tarjeta-formulario">
+            <h3 class="titulo-form">Envíanos un Mensaje</h3>
+            <form class="formulario" action="#" method="post" onsubmit="event.preventDefault(); alert('¡Gracias por contactarnos! Te responderemos muy pronto.');">
+                <div class="campo-grupo">
+                    <label for="nombre">Nombre Completo</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
+                </div>
+                <div class="campo-grupo">
+                    <label for="correo">Correo Electrónico</label>
+                    <input type="email" id="correo" name="correo" placeholder="juan@ejemplo.com" required>
+                </div>
+                <div class="campo-grupo">
+                    <label for="motivo">Motivo de Contacto</label>
+                    <select id="motivo" name="motivo">
+                        <option value="pedido">Consulta sobre Pedidos</option>
+                        <option value="evento">Catering y Eventos</option>
+                        <option value="sugerencia">Sugerencias o Comentarios</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <div class="campo-grupo">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-principal btn-block">Enviar Mensaje</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="piepagina">
+        <div class="footer-contacto">
+            <div class="footer-col">
+                <h4>FAST CRAVES</h4>
+                <p>El sabor auténtico de la comida rápida a la parrilla.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>📞 Teléfono: +51 987 654 321</p>
+                <p>✉️ Correo: pedidos@fastcraves.com</p>
+                <p>📍 Dirección: Av. Principal 123, Lima</p>
+            </div>
+            <div class="footer-col">
+                <h4>Horario</h4>
+                <p>Lunes a Domingo</p>
+                <p>11:00 AM - 11:00 PM</p>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <p>&copy; 2026 FAST CRAVES (Sass Edition). Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../JS/navbar.js"></script>
+</body>
+</html>
