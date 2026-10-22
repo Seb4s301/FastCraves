@@ -472,19 +472,36 @@ body {
   background-color: #2A1409;
   color: #ffffff;
   margin-top: auto;
-  padding: 5rem 8% 1.5rem;
+  padding: 6.5rem 8% 1.5rem;
+  overflow: hidden;
 }
 .piepagina::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 54px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V28 C1050,55 900,8 600,30 C300,52 150,6 0,30 Z' fill='%23FBF3E2'/%3E%3C/svg%3E") no-repeat;
-  background-size: 100% 100%;
+  width: 200%;
+  height: 76px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V30 C1100,12 1000,12 900,30 C800,48 700,48 600,30 C500,12 400,12 300,30 C200,48 100,48 0,30 Z' fill='%23FBF3E2'/%3E%3C/svg%3E") repeat-x;
+  background-size: 50% 100%;
   z-index: 1;
   pointer-events: none;
+  animation: marea 12s linear infinite;
+  will-change: transform;
+}
+.piepagina::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 92px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V30 C1100,20 1000,20 900,30 C800,40 700,40 600,30 C500,20 400,20 300,30 C200,40 100,40 0,30 Z' fill='%23EFDCB6'/%3E%3C/svg%3E") repeat-x;
+  background-size: 50% 100%;
+  z-index: 0;
+  pointer-events: none;
+  animation: marea-inversa 19s linear infinite;
+  will-change: transform;
 }
 .piepagina .footer-contacto {
   display: grid;
@@ -683,6 +700,22 @@ body {
   will-change: transform;
 }
 
+@keyframes marea {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes marea-inversa {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
 .formulario input,
 .formulario select,
 .formulario textarea {
@@ -705,7 +738,9 @@ body {
   .tarjeta-destacada,
   .tarjeta-formulario,
   .hamburguesa-flotante,
-  .tarjeta-producto .badge-producto {
+  .tarjeta-producto .badge-producto,
+  .piepagina::before,
+  .piepagina::after {
     animation: none;
   }
   .navbar .marca .logo,

@@ -120,10 +120,16 @@ Al final del archivo CSS se integró un bloque dedicado a microinteracciones vis
 4. **Efecto de Pulso Dinámico en Badges (`@keyframes pulsoBadge`)**:
    - Las insignias laten de forma infinita y sutil (**`scale(1.05)` cada 2.4 s**) guiando la atención hacia las promociones clave.
 
-5. **Zoom y Flotación en Imágenes de Productos**:
+5. **Onda de Marea en el Pie (`@keyframes marea` + `@keyframes marea-inversa`)**:
+   - La onda que separa el contenido del pie oscuro es un SVG **periódico** (empieza y termina en el mismo punto y con la misma tangente), repetido con `repeat-x` para que no se vean costuras.
+   - Hay **dos capas superpuestas** (`::before` y `::after`) con amplitudes distintas que viajan en **sentidos opuestos** y a distinta velocidad (`12s` y `19s`): una corriente entra mientras la otra sale, como una marea real.
+   - Ambas miden `200%` y se desplazan con `transform: translateX()` de `-50%` a `0` (o al revés), `linear` e infinito: al ser `transform` se animan en la GPU sin repintar la página.
+   - `overflow: hidden` en `.piepagina` recorta las teselas que desbordan.
+
+6. **Zoom y Flotación en Imágenes de Productos**:
    - Al hacer *hover*, la imagen se amplía (`scale(1.08)`), rota levemente (`rotate(-1deg)`) y proyecta una sombra flotante (`drop-shadow`).
 
-6. **Feedback en Formularios**:
+7. **Feedback en Formularios**:
    - En *Contacto* y *Reservas*, los campos responden al foco con borde rojo y una sombra difusa en tono carmesí.
 
 ---
