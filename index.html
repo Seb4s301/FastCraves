@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="JS/tema.js"></script>
+    <script defer src="JS/material.bundle.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-yEPZ7jP9S0QKiUQ0m3jjsO4ProIW7wvR9gXkI7JOGa2XVsw53Yke2bsdkBbjmmiX" crossorigin="anonymous">
     <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="CSS/tailwind.css">
     <title>FAST CRAVES - Classic Flame Burgers (Sass)</title>
 </head>
 <body>
@@ -15,16 +19,24 @@
             <img src="IMG/logo.jpg" alt="Logo Fast Craves" class="logo">
             <span class="logo-texto">FAST CRAVES <small>Sass Edition</small></span>
         </div>
-        <!-- Botón para pantallas pequeñas -->
-        <button class="menu-btn" id="menu-btn" aria-label="Abrir menú">
-            ☰
-        </button>
         <ul class="navbar-links" id="nav-links"> 
             <li><a href="index.html" class="active">Inicio</a></li>
             <li><a href="PAGINAS/menu.html">Menú</a></li>
             <li><a href="PAGINAS/reservas.html">Reservas</a></li>
             <li><a href="PAGINAS/contactanos.html">Contáctanos</a></li>
         </ul>        
+        <div class="navbar-tools">
+            <button type="button" id="theme-toggle" class="nav-tool" aria-pressed="false" title="Cambiar a tema oscuro">
+                <span data-theme-icon aria-hidden="true">☾</span>
+                <span data-theme-label class="visually-hidden">Tema oscuro</span>
+            </button>
+            <button type="button" id="cart-toggle" class="nav-tool carrito-toggle" data-bs-toggle="offcanvas" data-bs-target="#carrito" aria-controls="carrito" aria-label="Abrir carrito, 0 productos">
+                <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2.5 12h11l2-8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                <span class="cart-label">Carrito</span>
+                <span id="cart-count" class="cart-count" aria-hidden="true">0</span>
+            </button>
+            <button type="button" class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">☰</button>
+        </div>
     </nav>
 
     <!-- Sección Hero Principal -->
@@ -38,7 +50,10 @@
                     ¡Pide ahora y siente el auténtico sabor Fast Craves!
                 </p>
                 <div class="hero-botones">
-                    <a href="PAGINAS/menu.html" class="btn btn-principal">Explorar Menú</a>
+                    <div class="material-hero-button">
+                        <md-filled-button href="PAGINAS/menu.html">Explorar Menú</md-filled-button>
+                        <a href="PAGINAS/menu.html" class="btn btn-principal material-fallback">Explorar Menú</a>
+                    </div>
                     <a href="PAGINAS/reservas.html" class="btn btn-secundario">Reservar Mesa</a>
                 </div>
             </div>
@@ -51,7 +66,7 @@
     <!-- Sección de Categorías Destacadas -->
     <section class="seccion-destacados">
         <h2 class="titulo-seccion">Nuestras Especialidades</h2>
-        <div class="grilla-destacados">
+        <div class="grilla-destacados tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:lg:grid-cols-3 tw:gap-6">
             <div class="tarjeta-destacada">
                 <div class="icono-destacado">🍔</div>
                 <h3>Hamburguesas XL</h3>
@@ -72,6 +87,81 @@
             </div>
         </div>
     </section>
+
+    <!-- Ejemplo Bootstrap: acordeón controlado con data-bs-toggle="collapse". -->
+    <section class="seccion-ayuda tw:w-full tw:max-w-4xl tw:mx-auto tw:px-6 tw:py-12" aria-labelledby="titulo-ayuda">
+        <h2 id="titulo-ayuda" class="titulo-ayuda tw:text-center tw:mb-6">Antes de tu visita</h2>
+        <div class="accordion" id="preguntas-frecuentes">
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#respuesta-horario" aria-expanded="true" aria-controls="respuesta-horario">¿Cuál es el horario de atención?</button>
+                </h3>
+                <div id="respuesta-horario" class="accordion-collapse collapse show" data-bs-parent="#preguntas-frecuentes">
+                    <div class="accordion-body">Te esperamos de lunes a domingo, de 11:00 AM a 11:00 PM.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#respuesta-reservas" aria-expanded="false" aria-controls="respuesta-reservas">¿Cómo puedo reservar una mesa?</button>
+                </h3>
+                <div id="respuesta-reservas" class="accordion-collapse collapse" data-bs-parent="#preguntas-frecuentes">
+                    <div class="accordion-body">Entra a <a href="PAGINAS/reservas.html">Reservas</a> para ver el formulario de ejemplo y elegir fecha, hora y número de personas. Este sitio es una demostración; el formulario no envía reservas reales.</div>
+                </div>
+            </div>
+        </div>
+        <div class="tw:flex tw:justify-center tw:mt-6">
+            <button type="button" class="btn btn-principal" data-bs-toggle="modal" data-bs-target="#modal-visita">Planifica tu visita</button>
+        </div>
+    </section>
+
+    <!-- Ejemplo Bootstrap: modal con cierre, fondo y gestión del foco. -->
+    <div class="modal fade" id="modal-visita" tabindex="-1" aria-labelledby="titulo-modal-visita" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-visita">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="titulo-modal-visita">¡Te esperamos en Fast Craves!</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="tw:mb-3">Elige tus hamburguesas favoritas y organiza una salida con amigos o familia.</p>
+                    <p>Consulta nuestra carta o visita el formulario de reservas de demostración.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secundario" data-bs-dismiss="modal">Seguir explorando</button>
+                    <a href="PAGINAS/menu.html" class="btn btn-principal">Ver la carta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carrito Bootstrap: panel lateral compartido por todas las páginas. -->
+    <aside class="offcanvas offcanvas-end carrito-panel" tabindex="-1" id="carrito" aria-labelledby="carrito-titulo">
+        <div class="offcanvas-header">
+            <div>
+                <p class="carrito-eyebrow">FAST CRAVES</p>
+                <h2 class="offcanvas-title" id="carrito-titulo">Tu carrito</h2>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar carrito"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="carrito-vacio" class="carrito-vacio">
+                <span aria-hidden="true" class="carrito-vacio-icono">🍔</span>
+                <h3>Tu próxima hamburguesa te espera</h3>
+                <p>Explora la carta y agrega algo rico con el botón +.</p>
+                <a class="btn btn-principal" href="PAGINAS/menu.html">Explorar menú</a>
+            </div>
+            <ul id="carrito-items" class="carrito-items" aria-label="Productos en tu carrito"></ul>
+        </div>
+        <div class="carrito-resumen">
+            <div class="carrito-total"><span>Total</span><strong id="carrito-total">S/ 0.00</strong></div>
+            <p class="carrito-nota">Carrito de demostración. No se realizan pedidos ni cobros.</p>
+            <div class="carrito-acciones">
+                <button type="button" id="carrito-vaciar" class="btn btn-secundario" disabled>Vaciar carrito</button>
+                <button type="button" class="btn btn-principal" data-bs-dismiss="offcanvas">Seguir explorando</button>
+            </div>
+        </div>
+    </aside>
+    <div id="tienda-status" class="tienda-status" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <!-- Pie de página -->
     <footer id="contacto" class="piepagina">
@@ -98,6 +188,9 @@
     </footer>
 
     <!-- Menú desplegable del navbar en móvil -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/js/bootstrap.bundle.min.js" integrity="sha384-WyOxWvTyr1QaMPfiPJSv76iReVthorl5uWlFtZPyK0IEB0hGzo9y5Bp9mYanr8Bu" crossorigin="anonymous"></script>
     <script src="JS/navbar.js"></script>
+    <script src="JS/carrito-store.js"></script>
+    <script src="JS/carrito.js"></script>
 </body>
 </html>

@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../JS/tema.js"></script>
+    <script defer src="../JS/material.bundle.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-yEPZ7jP9S0QKiUQ0m3jjsO4ProIW7wvR9gXkI7JOGa2XVsw53Yke2bsdkBbjmmiX" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/index.css">
+    <link rel="stylesheet" href="../CSS/tailwind.css">
     <title>FAST CRAVES - Menú (Sass)</title>
 </head>
 <body>
@@ -15,16 +19,24 @@
             <img src="../IMG/logo.jpg" alt="Logo Fast Craves" class="logo">
             <span class="logo-texto">FAST CRAVES <small>Sass Edition</small></span>
         </div>
-        <!-- Botón para pantallas pequeñas -->
-        <button class="menu-btn" id="menu-btn" aria-label="Abrir menú">
-            ☰
-        </button>
         <ul class="navbar-links" id="nav-links"> 
             <li><a href="../index.html">Inicio</a></li>
             <li><a href="menu.html" class="active">Menú</a></li>
             <li><a href="reservas.html">Reservas</a></li>
             <li><a href="contactanos.html">Contáctanos</a></li>
         </ul>        
+        <div class="navbar-tools">
+            <button type="button" id="theme-toggle" class="nav-tool" aria-pressed="false" title="Cambiar a tema oscuro">
+                <span data-theme-icon aria-hidden="true">☾</span>
+                <span data-theme-label class="visually-hidden">Tema oscuro</span>
+            </button>
+            <button type="button" id="cart-toggle" class="nav-tool carrito-toggle" data-bs-toggle="offcanvas" data-bs-target="#carrito" aria-controls="carrito" aria-label="Abrir carrito, 0 productos">
+                <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2.5 12h11l2-8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                <span class="cart-label">Carrito</span>
+                <span id="cart-count" class="cart-count" aria-hidden="true">0</span>
+            </button>
+            <button type="button" class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">☰</button>
+        </div>
     </nav>
 
     <header class="encabezado-pagina">
@@ -33,9 +45,24 @@
     </header>
      
     <main class="cuerpo">
+        <!-- Material Design 3: buscador y chips para filtrar la carta. -->
+        <section id="menu-herramientas" class="menu-herramientas" aria-label="Buscar y filtrar productos" hidden>
+            <md-outlined-text-field id="menu-busqueda" label="Buscar en la carta" type="search" placeholder="Ej. queso, parrillera o bebida" supporting-text="Busca por nombre o ingredientes."></md-outlined-text-field>
+            <md-chip-set id="menu-filtros" aria-label="Categorías del menú">
+                <md-filter-chip label="Todos" data-category="todos" selected></md-filter-chip>
+                <md-filter-chip label="Hamburguesas" data-category="hamburguesas"></md-filter-chip>
+                <md-filter-chip label="Bebidas" data-category="bebidas"></md-filter-chip>
+            </md-chip-set>
+            <p id="menu-resultados" class="menu-resultados" role="status" aria-live="polite" aria-atomic="true"></p>
+        </section>
+        <div id="menu-sin-resultados" class="menu-sin-resultados" hidden>
+            <h2>No encontramos ese antojo</h2>
+            <p>Prueba con otro nombre o cambia la categoría.</p>
+            <md-outlined-button id="menu-restablecer" type="button">Mostrar toda la carta</md-outlined-button>
+        </div>
         <!-- Sección Hamburguesas -->
-        <h2 class="subtitulo-menu">Hamburguesas a la Parrilla</h2>
-        <section class="contenedor-menu">    
+        <h2 class="subtitulo-menu" id="categoria-hamburguesas">Hamburguesas a la Parrilla</h2>
+        <section class="contenedor-menu" data-menu-category="hamburguesas" aria-labelledby="categoria-hamburguesas">
             <div class="tarjeta-producto">
                 <span class="badge-producto badge-estrella">⭐ Más Vendida</span>
                 <img src="../IMG/ParrilleraXL.webp" alt="Parrillera XL" class="img-producto" width="600" height="415" loading="lazy">
@@ -43,7 +70,7 @@
                 <p class="desc-producto">Hamburguesa grande 100% carne de res a la parrilla con chorizo artesanal, papitas al hilo crocantes, mayonesa y crema de ají.</p>
                 <div class="fila-precio">
                     <span class="precio">S/ 24.90</span>
-                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                    <button type="button" class="btn-agregar" data-product-id="parrillera-xl" title="Agregar al pedido">+</button>
                 </div>
             </div>
 
@@ -54,7 +81,7 @@
                 <p class="desc-producto">Carne de res a la parrilla con rodajas de tomate, lechuga fresca, mayonesa suave, kétchup especial, pepinillos y cebolla crujiente.</p>
                 <div class="fila-precio">
                     <span class="precio">S/ 18.90</span>
-                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                    <button type="button" class="btn-agregar" data-product-id="whopper-grande" title="Agregar al pedido">+</button>
                 </div>
             </div>
 
@@ -65,7 +92,7 @@
                 <p class="desc-producto">Doble porción de hamburguesa de carne vacuna asada a fuego directo, láminas de queso cheddar fundido y tocino crujiente.</p>
                 <div class="fila-precio">
                     <span class="precio">S/ 14.90</span>
-                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                    <button type="button" class="btn-agregar" data-product-id="grande-carne" title="Agregar al pedido">+</button>
                 </div>
             </div>
 
@@ -76,14 +103,14 @@
                 <p class="desc-producto">Doble carne de res a la parrilla con abundante queso americano, pepinillos seleccionados, salsa de mostaza y kétchup.</p>
                 <div class="fila-precio">
                     <span class="precio">S/ 26.90</span>
-                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                    <button type="button" class="btn-agregar" data-product-id="mega-doble" title="Agregar al pedido">+</button>
                 </div>
             </div>
         </section>
 
         <!-- Sección Bebidas -->
-        <h2 class="subtitulo-menu subtitulo-bebidas">Bebidas Refrescantes 1L</h2>
-        <section class="contenedor-menu">
+        <h2 class="subtitulo-menu subtitulo-bebidas" id="categoria-bebidas">Bebidas Refrescantes 1L</h2>
+        <section class="contenedor-menu" data-menu-category="bebidas" aria-labelledby="categoria-bebidas">
             <div class="tarjeta-producto">
                 <span class="badge-producto badge-bebida">0% Azúcar</span>
                 <img src="../IMG/IncaKola.webp" alt="Inca Kola sin azúcar 1L" class="img-producto" width="443" height="573" loading="lazy">
@@ -91,7 +118,7 @@
                 <p class="desc-producto">La bebida de sabor nacional bien fría en botella personal grande de 1 litro sin azúcar añadida.</p>
                 <div class="fila-precio">
                     <span class="precio">S/ 6.90</span>
-                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                    <button type="button" class="btn-agregar" data-product-id="inca-kola" title="Agregar al pedido">+</button>
                 </div>
             </div>
 
@@ -102,7 +129,7 @@
                 <p class="desc-producto">El clásico sabor refrescante de Coca Cola en versión sin azúcar de 1 litro para acompañar tus hamburguesas.</p>
                 <div class="fila-precio">
                     <span class="precio">S/ 6.90</span>
-                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                    <button type="button" class="btn-agregar" data-product-id="coca-cola" title="Agregar al pedido">+</button>
                 </div>
             </div>
 
@@ -113,7 +140,7 @@
                 <p class="desc-producto">Refresco con delicioso toque de lima-limón, ideal para calmar la sed y disfrutar de tus combos.</p>
                 <div class="fila-precio">
                     <span class="precio">S/ 6.50</span>
-                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                    <button type="button" class="btn-agregar" data-product-id="sprite" title="Agregar al pedido">+</button>
                 </div>
             </div>
 
@@ -124,11 +151,40 @@
                 <p class="desc-producto">Explosión de sabor a naranja bien helada en presentación de 1 litro para compartir.</p>
                 <div class="fila-precio">
                     <span class="precio">S/ 5.50</span>
-                    <button class="btn-agregar" title="Agregar al pedido">+</button>
+                    <button type="button" class="btn-agregar" data-product-id="fanta" title="Agregar al pedido">+</button>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Carrito Bootstrap: panel lateral compartido por todas las páginas. -->
+    <aside class="offcanvas offcanvas-end carrito-panel" tabindex="-1" id="carrito" aria-labelledby="carrito-titulo">
+        <div class="offcanvas-header">
+            <div>
+                <p class="carrito-eyebrow">FAST CRAVES</p>
+                <h2 class="offcanvas-title" id="carrito-titulo">Tu carrito</h2>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar carrito"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="carrito-vacio" class="carrito-vacio">
+                <span aria-hidden="true" class="carrito-vacio-icono">🍔</span>
+                <h3>Tu próxima hamburguesa te espera</h3>
+                <p>Explora la carta y agrega algo rico con el botón +.</p>
+                <a class="btn btn-principal" href="menu.html">Explorar menú</a>
+            </div>
+            <ul id="carrito-items" class="carrito-items" aria-label="Productos en tu carrito"></ul>
+        </div>
+        <div class="carrito-resumen">
+            <div class="carrito-total"><span>Total</span><strong id="carrito-total">S/ 0.00</strong></div>
+            <p class="carrito-nota">Carrito de demostración. No se realizan pedidos ni cobros.</p>
+            <div class="carrito-acciones">
+                <button type="button" id="carrito-vaciar" class="btn btn-secundario" disabled>Vaciar carrito</button>
+                <button type="button" class="btn btn-principal" data-bs-dismiss="offcanvas">Seguir explorando</button>
+            </div>
+        </div>
+    </aside>
+    <div id="tienda-status" class="tienda-status" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <!-- Pie de página -->
     <footer id="contacto" class="piepagina">
@@ -154,6 +210,9 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/js/bootstrap.bundle.min.js" integrity="sha384-WyOxWvTyr1QaMPfiPJSv76iReVthorl5uWlFtZPyK0IEB0hGzo9y5Bp9mYanr8Bu" crossorigin="anonymous"></script>
     <script src="../JS/navbar.js"></script>
+    <script src="../JS/carrito-store.js"></script>
+    <script src="../JS/carrito.js"></script>
 </body>
 </html>

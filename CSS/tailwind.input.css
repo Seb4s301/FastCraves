@@ -1,0 +1,9 @@
+/* Sin Preflight: Bootstrap y estilos.scss ya definen los estilos base. */
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+/* important permite usar utilidades sobre el CSS sin capas de Bootstrap y Sass. */
+@import "tailwindcss/utilities.css" layer(utilities) prefix(tw) important source(none);
+
+@source "../index.html";
+@source "../PAGINAS/**/*.html";
+@source "../JS/**/*.js";

@@ -1,4 +1,4 @@
-# Proyecto FastCraves — Sass (SCSS) + Animaciones & Transiciones
+# Proyecto FastCraves — Material Design + Bootstrap + Tailwind + Sass
 
 🔥 **Temática:** *Classic Flame Burgers* — Rojo Flame `#D42D18`, Mostaza `#F2A81C` y Espresso `#2A1409` sobre crema cálida `#FBF3E2`.
 
@@ -70,7 +70,7 @@ Resumen de todo lo realizado en la fase de pulido y rediseño del proyecto.
 
 ### 7. Arquitectura y limpieza de código
 
-- **Fuente única:** `CSS/estilos.scss` → se compila a `index.css`, que comparten las 4 páginas.
+- **Estilos propios:** `CSS/estilos.scss` se compila a `index.css`, compartido por las 4 páginas. Bootstrap se carga por CDN y Tailwind genera su propia hoja `CSS/tailwind.css`.
   > Se eliminó `menu.css` (copia idéntica de `index.css`): `menu.html` cargaba ambos y ahora solo carga uno.
 - **Hover consolidado:** las reglas `:hover` viven en un único bloque `@media (hover: hover) and (pointer: fine)`. Antes estaban duplicadas en cada componente (mismo `transform` declarado dos veces), lo que anulaba el bloqueo a puntero real.
 - Se corrigió `transition: all` → propiedades específicas en `.btn-agregar`.
@@ -149,27 +149,86 @@ Al final del archivo CSS se integró un bloque dedicado a microinteracciones vis
 
 ---
 
+## Bootstrap y Tailwind
+
+Las cuatro páginas cargan las hojas en este orden: Bootstrap 5.3.9 por CDN, `CSS/index.css` (Sass) y `CSS/tailwind.css` (Tailwind). El bundle JavaScript de Bootstrap se incluye al final del body, con `integrity` y `crossorigin`, para habilitar los componentes interactivos. Bootstrap requiere conexión a Internet.
+
+### Ejemplos en la portada
+
+- **Acordeón de preguntas frecuentes:** `#preguntas-frecuentes`. Usa `accordion`, `data-bs-toggle="collapse"`, `data-bs-target` y `data-bs-parent` para abrir una respuesta a la vez.
+- **Modal «Planifica tu visita»:** `#modal-visita`. Se abre con `data-bs-toggle="modal"` y se cierra con `data-bs-dismiss="modal"`, Escape o el fondo. Bootstrap gestiona el foco del diálogo.
+- Los campos de contacto y reservas incorporan `form-control` y `form-select`.
+
+Referencias: [CDN de Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/), [acordeón](https://getbootstrap.com/docs/5.3/components/accordion/) y [modal](https://getbootstrap.com/docs/5.3/components/modal/).
+
+### Cómo usar Tailwind
+
+Tailwind 4 se compila localmente desde `CSS/tailwind.input.css`, sin CDN de desarrollo. Se omite Preflight para evitar un segundo reinicio de estilos y se usa el prefijo `tw:`. Las utilidades tienen `important` para que puedan sobrescribir las reglas sin capas de Bootstrap y Sass.
+
+La grilla de especialidades ya usa estas clases:
+
+```html
+<div class="grilla-destacados tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:lg:grid-cols-3 tw:gap-6">
+```
+
+También hay utilidades de espaciado y alineación en la nueva sección de preguntas. Escribe las clases completas en los HTML o JS: el compilador analiza esas rutas, no genera clases construidas por concatenación.
+
+Referencia: [Tailwind sin Preflight](https://tailwindcss.com/docs/preflight).
+
 ## ⚡ Comandos para Compilar
 
-> **Nota:** `estilos.scss` es la fuente única y `index.css` es la hoja compilada que comparten todas las páginas.
-
-### Método 1: Por Terminal de Comandos
-
-Desde la raíz del proyecto:
+Requiere Node.js 20.19+ o 22.12+ y npm. Desde la raíz:
 
 ```bash
-npx sass --no-source-map --style=expanded CSS/estilos.scss CSS/index.css
+npm ci
+npm run build
 ```
 
-O en modo observador (recompila automáticamente al guardar):
+`build` recompila Sass, Tailwind y los componentes Material Web. Los CSS generados se incluyen en el repositorio para abrir `index.html` sin instalar dependencias. Vuelve a compilar después de cambiar estilos o añadir clases Tailwind.
+
+Para recompilación automática, ejecuta cada comando en una terminal:
 
 ```bash
-npx sass --watch CSS/estilos.scss:CSS/index.css
+npm run watch:sass
+npm run watch:tailwind
 ```
 
-### Verificación rápida
+Para servir el sitio localmente con Python:
 
 ```bash
-# Tras editar estilos: recompilar y abrir la portada
-npx sass --no-source-map --style=expanded CSS/estilos.scss CSS/index.css
+python -m http.server 8000
 ```
+
+Abre http://localhost:8000. Los formularios siguen siendo demostraciones sin backend.
+
+
+## Carrito y tema oscuro
+
+En la barra superior de las cuatro páginas hay un botón de tema (luna/sol) y un botón de carrito con el número total de unidades.
+
+- En **Menú**, cada botón `+` agrega el producto al carrito. El panel lateral permite aumentar o reducir cantidades, eliminar un producto y vaciar el carrito. Calcula subtotales y total en soles, con un máximo de 99 unidades por producto.
+- El carrito usa el componente [Offcanvas de Bootstrap](https://getbootstrap.com/docs/5.3/components/offcanvas/). Se cierra con el botón de cierre, Escape o el fondo. Es una demostración: no envía pedidos ni procesa pagos.
+- `JS/carrito-store.js` contiene el catálogo y los cálculos en céntimos; `JS/carrito.js` conecta los controles y el panel. El carrito se guarda en `localStorage` con la clave `fastcraves-cart-v1`. Solo se guardan IDs y cantidades; los precios se toman del catálogo.
+- `JS/tema.js` aplica `data-bs-theme="light"` o `"dark"` antes de cargar el contenido. Respeta inicialmente la preferencia del sistema y guarda la selección manual en `fastcraves-theme`. Las variables `--fc-*` de `CSS/estilos.scss` adaptan los estilos propios y las olas del pie al tema.
+- Ambas preferencias se sincronizan entre pestañas del mismo sitio. Si el almacenamiento está bloqueado, los controles siguen funcionando en memoria. Para compartir el carrito entre páginas, sirve el proyecto mediante HTTP (por ejemplo, `python -m http.server 8000`); el almacenamiento bajo `file://` depende del navegador.
+
+Verificaciones de lógica (Node.js, sin dependencias adicionales):
+
+```bash
+npm test
+```
+
+Las pruebas cubren totales, cantidades, persistencia, datos guardados inválidos, almacenamiento bloqueado y selección de tema.
+
+
+## Material Design 3
+
+Se integró `@material/web` con componentes reales: el botón **Explorar Menú** de la portada, un buscador con etiqueta flotante y chips de categorías en la carta. La búsqueda combina nombre o ingredientes con la categoría, ignora tildes y mayúsculas, muestra el número de resultados e incluye un botón para restablecer los filtros. Los componentes comparten el tema claro/oscuro del proyecto.
+
+`JS/material.js` importa los componentes y conecta los filtros. Esbuild genera `JS/material.bundle.js`, cargado localmente por la portada y la carta. Para recompilarlo por separado:
+
+```bash
+npm run build:material
+```
+
+Para conocer **cómo y dónde se usan Material Design, Tailwind y Bootstrap**, consulta [la guía con fragmentos de código](DOCS/tecnologias-ui.md).

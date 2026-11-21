@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "**/tailwind.input.css": "tailwindcss"
+  },
+  "tailwindCSS.experimental.configFile": "CSS/tailwind.input.css"
+}

@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../JS/tema.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-yEPZ7jP9S0QKiUQ0m3jjsO4ProIW7wvR9gXkI7JOGa2XVsw53Yke2bsdkBbjmmiX" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/index.css">
+    <link rel="stylesheet" href="../CSS/tailwind.css">
     <title>FAST CRAVES - Contáctanos (Sass)</title>
 </head>
 <body>
@@ -15,16 +18,24 @@
             <img src="../IMG/logo.jpg" alt="Logo Fast Craves" class="logo">
             <span class="logo-texto">FAST CRAVES <small>Sass Edition</small></span>
         </div>
-        <!-- Botón para pantallas pequeñas -->
-        <button class="menu-btn" id="menu-btn" aria-label="Abrir menú">
-            ☰
-        </button>
         <ul class="navbar-links" id="nav-links"> 
             <li><a href="../index.html">Inicio</a></li>
             <li><a href="menu.html">Menú</a></li>
             <li><a href="reservas.html">Reservas</a></li>
             <li><a href="contactanos.html" class="active">Contáctanos</a></li>
         </ul>        
+        <div class="navbar-tools">
+            <button type="button" id="theme-toggle" class="nav-tool" aria-pressed="false" title="Cambiar a tema oscuro">
+                <span data-theme-icon aria-hidden="true">☾</span>
+                <span data-theme-label class="visually-hidden">Tema oscuro</span>
+            </button>
+            <button type="button" id="cart-toggle" class="nav-tool carrito-toggle" data-bs-toggle="offcanvas" data-bs-target="#carrito" aria-controls="carrito" aria-label="Abrir carrito, 0 productos">
+                <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2.5 12h11l2-8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                <span class="cart-label">Carrito</span>
+                <span id="cart-count" class="cart-count" aria-hidden="true">0</span>
+            </button>
+            <button type="button" class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">☰</button>
+        </div>
     </nav>
 
     <header class="encabezado-pagina">
@@ -38,15 +49,15 @@
             <form class="formulario" action="#" method="post" onsubmit="event.preventDefault(); alert('¡Gracias por contactarnos! Te responderemos muy pronto.');">
                 <div class="campo-grupo">
                     <label for="nombre">Nombre Completo</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
+                    <input class="form-control" type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
                 </div>
                 <div class="campo-grupo">
                     <label for="correo">Correo Electrónico</label>
-                    <input type="email" id="correo" name="correo" placeholder="juan@ejemplo.com" required>
+                    <input class="form-control" type="email" id="correo" name="correo" placeholder="juan@ejemplo.com" required>
                 </div>
                 <div class="campo-grupo">
                     <label for="motivo">Motivo de Contacto</label>
-                    <select id="motivo" name="motivo">
+                    <select class="form-select" id="motivo" name="motivo">
                         <option value="pedido">Consulta sobre Pedidos</option>
                         <option value="evento">Catering y Eventos</option>
                         <option value="sugerencia">Sugerencias o Comentarios</option>
@@ -55,12 +66,41 @@
                 </div>
                 <div class="campo-grupo">
                     <label for="mensaje">Mensaje</label>
-                    <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                    <textarea class="form-control" id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
                 </div>
                 <button type="submit" class="btn btn-principal btn-block">Enviar Mensaje</button>
             </form>
         </div>
     </main>
+
+    <!-- Carrito Bootstrap: panel lateral compartido por todas las páginas. -->
+    <aside class="offcanvas offcanvas-end carrito-panel" tabindex="-1" id="carrito" aria-labelledby="carrito-titulo">
+        <div class="offcanvas-header">
+            <div>
+                <p class="carrito-eyebrow">FAST CRAVES</p>
+                <h2 class="offcanvas-title" id="carrito-titulo">Tu carrito</h2>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar carrito"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="carrito-vacio" class="carrito-vacio">
+                <span aria-hidden="true" class="carrito-vacio-icono">🍔</span>
+                <h3>Tu próxima hamburguesa te espera</h3>
+                <p>Explora la carta y agrega algo rico con el botón +.</p>
+                <a class="btn btn-principal" href="menu.html">Explorar menú</a>
+            </div>
+            <ul id="carrito-items" class="carrito-items" aria-label="Productos en tu carrito"></ul>
+        </div>
+        <div class="carrito-resumen">
+            <div class="carrito-total"><span>Total</span><strong id="carrito-total">S/ 0.00</strong></div>
+            <p class="carrito-nota">Carrito de demostración. No se realizan pedidos ni cobros.</p>
+            <div class="carrito-acciones">
+                <button type="button" id="carrito-vaciar" class="btn btn-secundario" disabled>Vaciar carrito</button>
+                <button type="button" class="btn btn-principal" data-bs-dismiss="offcanvas">Seguir explorando</button>
+            </div>
+        </div>
+    </aside>
+    <div id="tienda-status" class="tienda-status" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <!-- Pie de página -->
     <footer class="piepagina">
@@ -86,6 +126,9 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/js/bootstrap.bundle.min.js" integrity="sha384-WyOxWvTyr1QaMPfiPJSv76iReVthorl5uWlFtZPyK0IEB0hGzo9y5Bp9mYanr8Bu" crossorigin="anonymous"></script>
     <script src="../JS/navbar.js"></script>
+    <script src="../JS/carrito-store.js"></script>
+    <script src="../JS/carrito.js"></script>
 </body>
 </html>
